@@ -54,6 +54,7 @@ function usePokemonSource(): {
   })
 
   // geting the pokemon only once
+  // should be used on mount or rebound
   useEffect(() => {
     fetch("/pokemon.json")
     .then((response) => response.json())
@@ -64,7 +65,6 @@ function usePokemonSource(): {
   }, []);
 
   // when returning defined function a useCallback should be implemented 
-
   const setSearch = useCallback((search: string) => {
     dispatch({
       type: "setSearch",
