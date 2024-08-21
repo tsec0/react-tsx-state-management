@@ -1,5 +1,6 @@
-import { 
-  useEffect,
+import { useQuery } from '@tanstack/react-query';
+
+import {
   createContext,
   useReducer, 
   useCallback,
@@ -19,49 +20,33 @@ interface Pokemon {
 }
 
 function usePokemonSource(): {
-  pokemon: Pokemon[] | null;
+  pokemon: Pokemon[];
   search: string;
   setSearch: (search: string) => void;
 } {
-  // const [pokemon, setPokemon] = useState<Pokemon[]>([]);
-  // const [search, setSearch ] = useState("");
+  const { data: pokemon } = useQuery<Pokemon[]>({
+    queryKey: ["pokemon"], 
+    queryFn: () => fetch("/pokemon.json").then((res) => res.json(),),
+    initialData: [],
+  });
 
   type PokemonState = {
-    pokemon: Pokemon[];
     search: string;
   }
 
   type PokemonAction = {
-    type: "setPokemon";
-    payload: Pokemon[]
-  } |  {
     type: "setSearch";
     payload: string
   };
 
-  const [{ pokemon, search }, dispatch] = useReducer(((state: PokemonState, action: PokemonAction) => {
+  const [{ search }, dispatch] = useReducer(((state: PokemonState, action: PokemonAction) => {
     switch(action.type){
-      case "setPokemon":
-        return { ...state, pokemon: action.payload}
-        case "setSearch":
-          return { ...state, search: action.payload}
+      case "setSearch":
+        return { ...state, search: action.payload}
     }
   }),{
-    pokemon: [],
     search: "",
-
   })
-
-  // geting the pokemon only once
-  // should be used on mount or rebound
-  useEffect(() => {
-    fetch("/pokemon.json")
-    .then((response) => response.json())
-    .then((data) => dispatch({
-      type: "setPokemon",
-      payload: data,
-    }))
-  }, []);
 
   // when returning defined function a useCallback should be implemented 
   const setSearch = useCallback((search: string) => {
