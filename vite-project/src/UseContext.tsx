@@ -1,4 +1,5 @@
-import { usePokemon, PokemonProvider } from './store';
+import { PokemonProvider } from './store';
+import { usePokemon } from './utils';
 
 function SearchBox(){
   const { search, setSearch } = usePokemon();

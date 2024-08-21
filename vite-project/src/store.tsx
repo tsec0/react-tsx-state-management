@@ -1,7 +1,6 @@
 import { 
   useEffect,
-  createContext, 
-  useContext, 
+  createContext,
   useReducer, 
   useCallback,
   useMemo, // to calculate existing values or used for serching
@@ -86,14 +85,10 @@ function usePokemonSource(): {
 
 // wraps components with the contexts info
 // should use a hook to not use directly the context
-const PokemonContext = createContext<
+export const PokemonContext = createContext<
     ReturnType<typeof usePokemonSource>>(
       {} as unknown as ReturnType<typeof usePokemonSource>
     );
-
-export function usePokemon(){
-  return useContext(PokemonContext)!;
-}
 
 export function PokemonProvider({
     children,
