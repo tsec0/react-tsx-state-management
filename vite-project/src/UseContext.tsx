@@ -18,7 +18,7 @@ const PokemonList = () => {
 
   return (
     <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-3">
-      {pokemon.map((p) => (
+      {pokemon !== null && pokemon.map((p) => (
         <li
           key={p.id}
           className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"
@@ -33,6 +33,7 @@ const PokemonList = () => {
           </div>
         </li>
       ))}
+      {pokemon === null && <li>{"No pokemons loaded"}</li>}
     </ul>
   );
 };
