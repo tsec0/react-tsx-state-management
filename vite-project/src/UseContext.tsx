@@ -45,6 +45,18 @@ const PokemonList = () => {
   );
 };
 
+const routes = [
+  {
+    path: "/",
+    element: (
+      <>
+        <SearchBox />
+        <PokemonList />
+      </>
+    )
+  }
+]
+
 // should create pokemon provider component
 
 function App() {
@@ -53,10 +65,11 @@ function App() {
     <>
     <QueryClientProvider client={queryClient}>
       <PokemonProvider>
+        <Router location={location} routes={routes}>
           <div className='mx-auto max-w-3xl'>
-            <SearchBox />
-            <PokemonList />
+            <Outlet />
           </div>
+        </Router>
       </PokemonProvider>
     </QueryClientProvider>
     </>
