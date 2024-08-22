@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './Valtio.tsx'
+import App from './ReduxToolkit.tsx'
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
