@@ -1,6 +1,6 @@
 import { useSelector, useDispatch, Provider } from "react-redux";
 
-import { store, selectSearch, setSearch, usePokemonQuery } from "./store-redux";
+import { store, selectSearch, setSearch, selectPokemon } from "./store-redux";
 
 function SearchBox(){
     const search = useSelector(selectSearch);
@@ -19,11 +19,11 @@ function SearchBox(){
 }
 
 const PokemonList = () => {
-    const { data } = usePokemonQuery(undefined);
+    const pokemon = useSelector(selectPokemon);
 
   return (
     <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-3">
-      {(data || []).map((p) => (
+      {pokemon.map((p) => (
         <li
           key={p.id}
           className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"

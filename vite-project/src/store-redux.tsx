@@ -3,8 +3,10 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
     createSlice,
     configureStore,
-    type PayloadAction
+    type PayloadAction,
+    createSelector
 } from "@reduxjs/toolkit";
+import { search } from "./store-valtio";
 
 interface Pokemon {
     id: number,
@@ -56,3 +58,15 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 
 export const selectSearch = (state: RootState) => state.search.search;
+
+store.dispatch(pokemonApi.endpoints.getPokemon.initiate(undefined))
+
+export const selectPokemon = createSelector(
+    (state: RootState) => 
+        pokemonApi.endpoints.getPokemon.select(undefined)(state)?.data,
+    (state: RootState) => state.search.search,
+    (pokemon, search) => (pokemon || [])
+    .filter((pokemon) => pokemon.name.toLowerCase().includes(search.toLowerCase()))
+    .slice(0, 10)
+    .sort((a, b) => a.name.localeCompare(b.name))
+)
