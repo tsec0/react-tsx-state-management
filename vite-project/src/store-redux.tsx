@@ -6,7 +6,6 @@ import {
     type PayloadAction,
     createSelector
 } from "@reduxjs/toolkit";
-import { search } from "./store-valtio";
 
 interface Pokemon {
     id: number,
