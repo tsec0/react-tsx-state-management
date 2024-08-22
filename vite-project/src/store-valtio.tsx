@@ -24,8 +24,11 @@ export const allPokemon = proxy({
 export const pokemon = derive({
     list: (get) => {
         const query = get(search).query.toLowerCase();
-        return get(allPokemon).pokemon.filter((p) => p.name.toLowerCase().includes(query));
-    }
+        return get(allPokemon).pokemon.filter((p) => 
+            p.name.toLowerCase().includes(query)
+        ).slice(0, 10)
+        .sort((a,b) => a.name.localeCompare(b.name));
+    },
 })
 
 fetch("/pokemon.json")
